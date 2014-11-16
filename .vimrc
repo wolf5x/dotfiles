@@ -20,6 +20,7 @@ set autoindent
 " Language Specified Formatting {{{
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 et
 autocmd FileType go setlocal ts=8 sts=8 sw=8 noet
+autocmd FileType c,cpp,cc,h setlocal ts=2 sts=2 sw=2 et wrap tw=80
 " }}}
 " UI Layout {{{
 set number              " show line numbers
@@ -28,6 +29,7 @@ set nocursorline          " highlight current line
 set wildmenu
 "set lazyredraw
 set showmatch           " higlight matching parenthesis
+set ruler
 " }}}
 " Searching {{{
 set ignorecase          " ignore case when searching
@@ -114,13 +116,31 @@ set pastetoggle=<F2>
 " (for Vundle only)
 "Plugin 'honza/vim-snippets'
 
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" Trigge configuration. Do not use <tab> if you use https://github.com/Valloric/mouCompleteMe.
+"let g:UltiSnipsExpandTrigger="<c-tab>"
+let g:UltiSnipsExpandTrigger = "<nop>"
+let g:UltiSnipsJumpForwardTrigger="<c-e>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+let g:ulti_expand_or_jump_res = 0
+function ExpandSnippetOrCarriageReturn()
+    let snippet = UltiSnips#ExpandSnippetOrJump()
+    if g:ulti_expand_or_jump_res > 0
+        return snippet
+    else
+        return "\<CR>"
+    endif
+endfunction
+inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+" }}}
+" YouCompleteMe {{{
+"let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
+"let g:ycm_key_list_previous_completion = ["<C-S-TAB>", '<Up>']
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+let g:ycm_confirm_extra_conf = 0
+
 " }}}
 " NERDTree {{{
 "let NERDTreeIgnore = ['\.pyc$', 'build', 'venv', 'egg', 'egg-info/', 'dist', 'docs']
