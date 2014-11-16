@@ -8,7 +8,7 @@
     tool = tkdiff
     algorithm = patience
 [core]
-    editor = /usr/bin/vim
+    editor = vim
 [push]
     default = simple
 [init]
