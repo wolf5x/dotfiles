@@ -1,11 +1,11 @@
 [user]
-    name = Doug Black
-    email = dblack@twilio.com
+    name = wolf5x
+    email = wolf5x1016@gmail.com
 [color]
     ui = true
     status = auto
 [diff]
-    tool = vimdiff
+    tool = tkdiff
     algorithm = patience
 [core]
     editor = /usr/bin/vim
