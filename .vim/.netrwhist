@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/usr/local/google/home/qqz/Projects/dotfiles/.vim'
-let g:netrw_dirhist_2='/usr/local/google/home/qqz/.vim'
-let g:netrw_dirhist_3='/usr/local/google/home/qqz/Projects/dotfiles/.vim'
-let g:netrw_dirhist_4='/usr/local/google/home/qqz/.vim'
-let g:netrw_dirhist_5='/google/src/cloud/qqz/qqz/google3/isp/fiber/fms/visualization/kiffer/app'
-let g:netrw_dirhist_6='/google/src/cloud/qqz/qqz/google3/isp/fiber/fms/visualization/annotation/app'

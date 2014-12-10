@@ -1,7 +1,21 @@
-" Douglas Black
+" Launch Config {{{
+"runtime! debian.vim
+set nocompatible
+call pathogen#infect()
+if has("autocmd")
+    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+                \| exe "normal! g'\"" | endif
+endif
+" }}}
 " Colors {{{
 syntax enable           " enable syntax processing
-"colorscheme badwolf
+set background=dark
+colorscheme ron
+"highlight Error ctermfg=white ctermbg=red guibg=white guibg=red
+" }}}
+" Format Check {{{
+highlight OverLength ctermfg=black ctermbg=yellow guibg=yellow guifg=black
+autocmd FileType c,cpp,cc,h match OverLength /\%81v.\+/
 " }}}
 " Misc {{{
 set ttyfast                     " faster redraw
@@ -56,7 +70,7 @@ nnoremap gV `[v`]
 "xnoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
 "onoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
 "xnoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
- 
+
 "onoremap al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
 "xnoremap al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
 "onoremap il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
@@ -74,10 +88,10 @@ let mapleader=","
 "nnoremap <leader>l :call ToggleNumber()<CR>
 "nnoremap <leader><space> :noh<CR>
 "nnoremap <leader>s :mksession<CR>
-"nnoremap <leader>a :Ag 
+"nnoremap <leader>a :Ag
 "nnoremap <leader>c :SyntasticCheck<CR>:Errors<CR>
 "nnoremap <leader>1 :set number!<CR>
-"nnoremap <leader>d :Make! 
+"nnoremap <leader>d :Make!
 "nnoremap <leader>r :call RunTestFile()<CR>
 "nnoremap <leader>g :call RunGoFile()<CR>
 "vnoremap <leader>y "+y
@@ -108,7 +122,7 @@ set pastetoggle=<F2>
 "let g:ctrlp_custom_ignore = '\vbuild/|dist/|venv/|target/|\.(o|swp|pyc|egg)$'
 " }}}
 " Ultisnips {{{
-" Track the engine. 
+" Track the engine.
 " (for Vundle only)
 "Plugin 'SirVer/ultisnips'
 
@@ -117,7 +131,6 @@ set pastetoggle=<F2>
 "Plugin 'honza/vim-snippets'
 
 " Trigge configuration. Do not use <tab> if you use https://github.com/Valloric/mouCompleteMe.
-"let g:UltiSnipsExpandTrigger="<c-tab>"
 let g:UltiSnipsExpandTrigger = "<nop>"
 let g:UltiSnipsJumpForwardTrigger="<c-e>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
@@ -138,8 +151,8 @@ let g:UltiSnipsEditSplit="vertical"
 " YouCompleteMe {{{
 "let g:ycm_key_list_select_completion = ['<C-TAB>', '<Down>']
 "let g:ycm_key_list_previous_completion = ["<C-S-TAB>", '<Up>']
-let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
-let g:ycm_confirm_extra_conf = 0
+"let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+"let g:ycm_confirm_extra_conf = 0
 
 " }}}
 " NERDTree {{{
@@ -148,15 +161,6 @@ let g:ycm_confirm_extra_conf = 0
 " Syntastic {{{
 "let g:syntastic_python_flake8_args='--ignore=E501'
 "let g:syntastic_ignore_files = ['.java$']
-" }}}
-" Launch Config {{{
-"runtime! debian.vim
-set nocompatible
-call pathogen#infect()
-if has("autocmd")
-    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-                \| exe "normal! g'\"" | endif
-endif
 " }}}
 " Tmux {{{
 "if exists('$TMUX') " allows cursor change in tmux mode
@@ -168,7 +172,7 @@ endif
 "endif
 "" }}}
 " MacVim {{{
-"set guioptions-=r 
+"set guioptions-=r
 "set guioptions-=L
 " }}}
 " AutoGroups {{{
@@ -185,10 +189,10 @@ endif
 "augroup END
 " }}}
 " Backups {{{
-set backup 
-set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp 
-set backupskip=/tmp/*,/private/tmp/* 
-set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp 
+set backup
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set backupskip=/tmp/*,/private/tmp/*
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set writebackup
 " }}}
 " Custom Functions {{{
@@ -246,10 +250,10 @@ function! <SID>CleanFile()
     let @/=_s
     call cursor(l, c)
 endfunction
- 
+
 function! s:NextTextObject(motion, dir)
   let c = nr2char(getchar())
- 
+
   if c ==# "b"
       let c = "("
   elseif c ==# "B"
@@ -257,9 +261,14 @@ function! s:NextTextObject(motion, dir)
   elseif c ==# "r"
       let c = "["
   endif
- 
+
   exe "normal! ".a:dir.c."v".a:motion.c
 endfunction
 " }}}
-
+" Google Plugins {{{
+source /usr/share/vim/google/google.vim
+Glug youcompleteme-google
+Glug ultisnips-google
+Glug codefmt-google auto_filetypes+=blazebuild
+" }}}
 " vim:foldmethod=marker:foldlevel=0

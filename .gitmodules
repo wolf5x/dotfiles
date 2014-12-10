@@ -1,6 +1,6 @@
-[submodule ".vim/bundle/vim-sneak"]
-	path = .vim/bundle/vim-sneak
-	url = https://github.com/justinmk/vim-sneak.git
-[submodule ".vim/bundle/gundo.vim"]
-	path = .vim/bundle/gundo.vim
-	url = https://github.com/sjl/gundo.vim.git
+[submodule "g/.vim/bundle/ultisnips"]
+	path = g/.vim/bundle/ultisnips
+	url = git://github.com/SirVer/ultisnips.git
+[submodule "g/.vim/bundle/vim-snippets"]
+	path = g/.vim/bundle/vim-snippets
+	url = https://github.com/honza/vim-snippets.git
