@@ -10,7 +10,6 @@ endif
 " Colors {{{
 syntax enable           " enable syntax processing
 set background=dark
-colorscheme ron
 "highlight Error ctermfg=white ctermbg=red guibg=white guibg=red
 " }}}
 " Format Check {{{
@@ -58,7 +57,7 @@ set nofoldenable        " don't fold files by default on open
 "nnoremap <space> za
 set foldlevelstart=10    " start with fold level of 1
 " }}}
-" Line Shortcuts {{{
+" View Shortcuts {{{
 "nnoremap j gj
 "nnoremap k gk
 nnoremap B ^
@@ -66,6 +65,9 @@ nnoremap E $
 nnoremap $ <nop>
 nnoremap ^ <nop>
 nnoremap gV `[v`]
+nnoremap to :tabprevious<cr>
+nnoremap tn :tabnext<cr>
+nnoremap tN :tabnew<space>
 "onoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
 "xnoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
 "onoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
