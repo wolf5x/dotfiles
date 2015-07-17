@@ -1,3 +1,12 @@
+" Launch Config {{{
+"runtime! debian.vim
+set nocompatible
+call pathogen#infect()
+if has("autocmd")
+    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+                \| exe "normal! g'\"" | endif
+endif
+" }}}
 " Douglas Black
 " Colors {{{
 syntax enable           " enable syntax processing
@@ -152,15 +161,6 @@ let g:ycm_confirm_extra_conf = 0
 " Syntastic {{{
 "let g:syntastic_python_flake8_args='--ignore=E501'
 "let g:syntastic_ignore_files = ['.java$']
-" }}}
-" Launch Config {{{
-"runtime! debian.vim
-set nocompatible
-call pathogen#infect()
-if has("autocmd")
-    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-                \| exe "normal! g'\"" | endif
-endif
 " }}}
 " Tmux {{{
 "if exists('$TMUX') " allows cursor change in tmux mode
