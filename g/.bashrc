@@ -142,14 +142,16 @@ export GOPATH=~/Projects/go_appengine/gopath
 export PATH=~/Projects/go_appengine:$PATH
 
 # Placer tool
-export PATH=/google/data/ro/projects/placer:$PATH
+export PATH=/home/build/static/projects/dremel:/google/data/ro/projects/placer:$PATH
 export MILKYPLACER=/placer/prod/home/gfiber-busdata-dremel/milkyway
 
 # Shortcut
-export CNSROOT=/cns/pe-d/home/gfiber-busdata
-alias fl='fileutil ls'
-alias fll='fileutil ls -l'
-alias fcp='fileutil cp'
+export CNS=/cns/pe-d/home/gfiber-busdata
+export ICON=/namespace/gfiber-partner/dropbox/gfiber-partner-icon/upload
+alias fu='fileutil'
+alias fl='fu ls'
+alias fll='fl -l'
+alias fcp='fu cp'
 
 # enable programmable completion features
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
@@ -160,8 +162,18 @@ fi
 alias spansql='span sql --max_value_lines=100'
 alias gofms='g4d && cd isp/fiber/fms'
 alias gofas='g4d && cd isp/fiber/fas'
-alias gomilky='g4d && cd isp/fiber/fms/milkyway'
+alias gojfas='g4d && cd java/com/google/fiber/fas'
+alias gojtfas='g4d && cd javatests/com/google/fiber/fas'
+alias gomilky='g4d && cd isp/fiber/fas/milkyway'
+alias goborg='g4d && cd production/borg/gfiber-busdata/templates'
+alias gobcron='g4d && cd production/borgcron/prod/gfiber-dsi-prod'
+alias gobiz='g4d && cd java/com/google/fiber/bizsys/flume/address'
 alias goexp='g4d && cd experimental/users/qqz'
 alias gojexp='g4d && cd experimental/java/users/qqz'
-alias bopt='blaze build -c opt'
+alias updfas='span updatedatabase /span/global/gfiber-busdata:fas'
+alias getdat='/google/data/ro/projects/tonic/admin_session \
+  --tonic_policy=gfiber-fds-eng-prod-access \
+  --user=all_principals \
+  --delegates=mdbgroup/megastore,mdbuser/gfiber-fds-prod,mdbuser/qqz \
+  --reason="Sync FDS address to FAS"'
 

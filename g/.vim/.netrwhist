@@ -1,2 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =0
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/usr/local/google/home/qqz/Documents/Milkyway/IDOL2'
+let g:netrw_dirhist_2='/tmp/2015-04-27'
+let g:netrw_dirhist_3='/google/src/cloud/qqz/fds-sync-fas/google3/isp/fiber/fas/pipeline'
+let g:netrw_dirhist_4='/google/src/cloud/qqz/milky-borg/google3/production/borgcron/prod/gfiber-dsi-prod/templates'

@@ -68,6 +68,7 @@ nnoremap gV `[v`]
 nnoremap to :tabprevious<cr>
 nnoremap tn :tabnext<cr>
 nnoremap tN :tabnew<space>
+nnoremap tV :vsplit<space>
 "onoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
 "xnoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
 "onoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>

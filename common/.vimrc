@@ -45,7 +45,7 @@ set nofoldenable        " don't fold files by default on open
 "nnoremap <space> za
 set foldlevelstart=10    " start with fold level of 1
 " }}}
-" Line Shortcuts {{{
+" View Shortcuts {{{
 "nnoremap j gj
 "nnoremap k gk
 nnoremap B ^
@@ -53,11 +53,14 @@ nnoremap E $
 nnoremap $ <nop>
 nnoremap ^ <nop>
 nnoremap gV `[v`]
+nnoremap <leader>[ :tabprevious<cr>
+nnoremap <leader>] :tabnext<cr>
+nnoremap <leader>n :tabnew<space>
 "onoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
 "xnoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
 "onoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
 "xnoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
- 
+
 "onoremap al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
 "xnoremap al :<c-u>call <SID>NextTextObject('a', 'F')<cr>
 "onoremap il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
