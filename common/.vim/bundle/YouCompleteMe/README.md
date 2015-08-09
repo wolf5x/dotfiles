@@ -16,8 +16,6 @@ YouCompleteMe: a code-completion engine for Vim
     - [Completion string ranking](#completion-string-ranking)
     - [General semantic completion](#general-semantic-completion-engine-usage)
     - [C-family semantic completion](#c-family-semantic-completion-engine-usage)
-    - [Python semantic completion](#python-semantic-completion)
-    - [C# semantic completion](#c-semantic-completion)
     - [Semantic completion for other languages](#semantic-completion-for-other-languages)
     - [Writing new semantic completers](#writing-new-semantic-completers)
     - [Diagnostic display](#diagnostic-display)
@@ -39,9 +37,10 @@ YouCompleteMe is a fast, as-you-type, fuzzy-search code completion engine for
 works with every programming language, a semantic, [Clang][]-based engine that
 provides native semantic code completion for C/C++/Objective-C/Objective-C++
 (from now on referred to as "the C-family languages"), a [Jedi][]-based
-completion engine for Python, an [OmniSharp][]-based completion engine for C#
-and an omnifunc-based completer that uses data from Vim's omnicomplete system to
-provide semantic completions for many other languages (Ruby, PHP etc.).
+completion engine for Python, an [OmniSharp][]-based completion engine for C#,
+a [Gocode][]-based completion engine for Go, and an omnifunc-based completer
+that uses data from Vim's omnicomplete system to provide semantic completions
+for many other languages (Ruby, PHP etc.).
 
 ![YouCompleteMe GIF demo](http://i.imgur.com/0OP4ood.gif)
 
@@ -147,7 +146,7 @@ Compiling YCM **without** semantic support for C-family languages:
     ./install.sh
 
 If you want semantic C# support, you should add `--omnisharp-completer` to the
-install script as well.
+install script as well. If you want Go support, you should add `--gocode-completer`.
 
 That's it. You're done. Refer to the _User Guide_ section on how to use YCM.
 Don't forget that if you want the C-family semantic completion engine to work,
@@ -190,7 +189,7 @@ Compiling YCM **without** semantic support for C-family languages:
     ./install.sh
 
 If you want semantic C# support, you should add `--omnisharp-completer` to the
-install script as well.
+install script as well. If you want Go support, you should add `--gocode-completer`.
 
 That's it. You're done. Refer to the _User Guide_ section on how to use YCM.
 Don't forget that if you want the C-family semantic completion engine to work,
@@ -243,7 +242,7 @@ Compiling YCM **without** semantic support for C-family languages:
     ./install.sh --system-boost
 
 If you want semantic C# support, you should add `--omnisharp-completer` to the
-install script as well.
+install script as well. If you want Go support, you should add `--gocode-completer`.
 
 That's it. You're done. Refer to the _User Guide_ section on how to use YCM.
 Don't forget that if you want the C-family semantic completion engine to work,
@@ -500,31 +499,12 @@ getting fast completions.
 Call the `:YcmDiags` command to see if any errors or warnings were detected in
 your file.
 
-### Python semantic completion
-
-YCM uses [Jedi][] to power its semantic completion for Python. This should "just
-work" without any configuration from the user. You do NOT need to install Jedi
-yourself; YCM uses it as a git subrepo. If you're installing YCM with Vundle
-(which is the recommended way) then Vundle will make sure that the subrepo is
-checked out when you do `:PluginInstall`. If you're installing YCM by hand, then
-you need to run `git submodule update --init --recursive` when you're checking
-out the YCM repository. That's it.
-
-But again, installing YCM with Vundle takes care of all of this for you.
-
-### C# semantic completion
-
-YCM uses [OmniSharp][] to provide semantic completion for C#. It's used as a git
-subrepo. If you're installing YCM with Vundle (which is the recommended way)
-then Vundle will make sure that the subrepo is checked out when you do
-`:PluginInstall`. If you're installing YCM by hand, then you need to run `git
-submodule update --init --recursive` when you're checking out the YCM
-repository.
-
-OmniSharp is written in C# and has to be compiled. The `install.sh` script takes
-care of this if you pass `--omnisharp-completer` as an argument.
-
 ### Semantic completion for other languages
+
+Python, C#, and Go are supported natively by YouCompleteMe using the [Jedi][],
+[Omnisharp][], and [Gocode][] engines, respectively. Check the
+[installation](#installation) section for instructions to enable these features
+if desired.
 
 YCM will use your `omnifunc` (see `:h omnifunc` in Vim) as a source for semantic
 completions if it does not have a native semantic completion engine for your
@@ -675,7 +655,15 @@ You may want to map this command to a key; try putting `nnoremap <F5>
 ### The `:YcmDiags` command
 
 Calling this command will fill Vim's `locationlist` with errors or warnings if
-any were detected in your file and then open it.
+any were detected in your file and then open it. If a given error or warning can
+be fixed by a call to `:YcmCompleter FixIt`, then ` (FixIt available)` is
+appended to the error or warning text. See the `FixIt` completer subcommand for
+more information. 
+
+NOTE: The absense of ` (FixIt available)` does not strictly imply a fix-it is 
+not available as not all completers are able to provide this indication. For
+example, the c-sharp completer provides many fix-its but does not add this
+additional indication.
 
 The `g:ycm_open_loclist_on_ycm_diags` option can be used to prevent the location
 list from opening, but still have it filled with new diagnostic data. See the
@@ -836,6 +824,40 @@ For global declarations, the semantic parent is the translation unit.
 NOTE: Causes reparsing of the current translation unit.
 
 Supported in filetypes: `c, cpp, objc, objcpp`
+
+### The `FixIt` subcommand
+
+Where available, attempts to make changes to the buffer to correct the
+diagnostic closest to the cursor position.
+
+Completers which provide diagnostics may also provide trivial modifications to
+the source in order to correct the diagnostic. Examples include syntax errors
+such as missing trailing semi-colons, spurious characters, or other errors which
+the semantic engine can deterministically suggest corrections.
+
+If no fix-it is available for the current line, or there is no diagnostic on the
+current line, this command has no effect on the current buffer. If any
+modifications are made, the number of changes made to the buffer is echo'd and
+the user may use the editor's undo command to revert.
+
+When a diagnostic is available, and `g:ycm_echo_current_diagnostic` is set to 1,
+then the text ` (FixIt)` is appended to the echo'd diagnostic when the
+completer is able to add this indication. The text ` (FixIt available)` is 
+also appended to the diagnostic text in the output of the `:YcmDiags` command 
+for any diagnostics with available fix-its (where the completer can provide this
+indication).
+
+NOTE: Causes re-parsing of the current translation unit.
+
+NOTE: After applying a fix-it, the diagnostics UI is not immediately updated.
+This is due to a technical restriction in vim, and moving the cursor, or issuing
+the the `:YcmForceCompileAndDiagnostics` command will refresh the diagnostics. 
+Repeated invocations of the `FixIt` command on a given line, however, _do_ apply 
+all diagnostics as expected without requiring refreshing of the diagnostics UI.
+This is particularly useful where there are multiple diagnostics on one line, or
+where after fixing one diagnostic, another fix-it is available.
+
+Supported in filetypes: `c, cpp, objc, objcpp, cs`
 
 ### The `StartServer` subcommand
 
@@ -1095,7 +1117,8 @@ Default: `1`
 ### The `g:ycm_echo_current_diagnostic` option
 
 When this option is set, YCM will echo the text of the diagnostic present on the
-current line when you move your cursor to that line.
+current line when you move your cursor to that line. If a `FixIt` is available
+for the current diagnostic, then ` (FixIt)` is appended.
 
 This option is part of the Syntastic compatibility layer; if the option is not
 set, YCM will fall back to the value of the `g:syntastic_echo_current_error`
@@ -1543,13 +1566,13 @@ Default: `[see next line]`
 
     let g:ycm_semantic_triggers =  {
       \   'c' : ['->', '.'],
-      \   'objc' : ['->', '.'],
+      \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+      \             're!\[.*\]\s'],
       \   'ocaml' : ['.', '#'],
       \   'cpp,objcpp' : ['->', '.', '::'],
       \   'perl' : ['->'],
       \   'php' : ['->', '::'],
-      \   'cs,java,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-      \   'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
+      \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
       \   'ruby' : ['.', '::'],
       \   'lua' : ['.', ':'],
       \   'erlang' : [':'],
@@ -1945,6 +1968,24 @@ the list of flags you return from your `FlagsForFile` function in your
 
 See [issue #303][issue-303] for details.
 
+### Install YCM with [NeoBundle][NeoBundle]
+[NeoBundle][NeoBundle] can do the compilation for you; just add the following to your vimrc:
+
+    NeoBundle 'Valloric/YouCompleteMe', {
+         \ 'build'      : {
+            \ 'mac'     : './install.sh --clang-completer --system-libclang --omnisharp-completer',
+            \ 'unix'    : './install.sh --clang-completer --system-libclang --omnisharp-completer',
+            \ 'windows' : './install.sh --clang-completer --system-libclang --omnisharp-completer',
+            \ 'cygwin'  : './install.sh --clang-completer --system-libclang --omnisharp-completer'
+            \ }
+         \ }
+
+But you could have problems with the time needed to get the sub modules and
+compile the whole thing.
+To increase the Neobundle timeout to 1500 seconds, add the following to your vimrc:
+
+    let g:neobundle#install_process_timeout = 1500
+
 Contact
 -------
 
@@ -1959,30 +2000,21 @@ The latest version of the plugin is available at
 
 The author's homepage is <http://val.markovic.io>.
 
-Project Management
-------------------
-
-This open-source project is run by me, Strahinja Val Markovic. I also happen to
-work for Google and the code I write here is under Google copyright (for the
-sake of simplicity and other reasons). This does **NOT** mean that this is an
-official Google product (it isn't) or that Google has (or wants to have)
-anything to do with it.
-
 License
 -------
 
 This software is licensed under the [GPL v3 license][gpl].
-© 2013 Google Inc.
+© 2015 YouCompleteMe contributors
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Valloric/youcompleteme/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 [Clang]: http://clang.llvm.org/
 [vundle]: https://github.com/gmarik/vundle#about
 [pathogen]: https://github.com/tpope/vim-pathogen#pathogenvim
-[clang-download]: http://llvm.org/releases/download.html#3.3
+[clang-download]: http://llvm.org/releases/download.html
 [brew]: http://mxcl.github.com/homebrew/
 [cmake-download]: http://www.cmake.org/cmake/resources/software.html
-[macvim]: http://code.google.com/p/macvim/#Download
+[macvim]: https://github.com/macvim-dev/macvim/releases
 [vimrc]: http://vimhelp.appspot.com/starting.txt.html#vimrc
 [gpl]: http://www.gnu.org/copyleft/gpl.html
 [vim]: http://www.vim.org/
@@ -2013,3 +2045,5 @@ This software is licensed under the [GPL v3 license][gpl].
 [bear]: https://github.com/rizsotto/Bear
 [Options]: https://github.com/Valloric/YouCompleteMe#options
 [ygen]: https://github.com/rdnetto/YCM-Generator
+[Gocode]: https://github.com/nsf/gocode
+[NeoBundle]: https://github.com/Shougo/neobundle.vim
