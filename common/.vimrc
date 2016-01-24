@@ -34,7 +34,8 @@ set autoindent
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 et
 autocmd FileType go setlocal ts=8 sts=8 sw=8 noet
 autocmd FileType c,cpp,cc,h setlocal ts=2 sts=2 sw=2 et wrap tw=80
-autocmd FIleType sql setlocal ts=2 sts=2 sw=2 et
+autocmd FileType sql setlocal ts=2 sts=2 sw=2 et
+autocmd FileType php,html setlocal ts=2 sts=2 sw=2 et
 " }}}
 " UI Layout {{{
 set number              " show line numbers
@@ -61,15 +62,15 @@ set foldlevelstart=10    " start with fold level of 1
 " View Shortcuts {{{
 "nnoremap j gj
 "nnoremap k gk
-nnoremap B ^
-nnoremap E $
-nnoremap $ <nop>
-nnoremap ^ <nop>
+"nnoremap B ^
+"nnoremap E $
+"nnoremap $ <nop>
+"nnoremap ^ <nop>
 nnoremap gV `[v`]
-nnoremap to :tabprevious<cr>
-nnoremap tn :tabnext<cr>
-nnoremap tN :tabnew<space>
-nnoremap tV :vsplit<space>
+"nnoremap to :tabprevious<cr>
+"nnoremap tn :tabnext<cr>
+"nnoremap tN :tabnew<space>
+"nnoremap tV :vsplit<space>
 "onoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
 "xnoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
 "onoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
@@ -92,10 +93,10 @@ let mapleader=","
 "nnoremap <leader>l :call ToggleNumber()<CR>
 "nnoremap <leader><space> :noh<CR>
 "nnoremap <leader>s :mksession<CR>
-"nnoremap <leader>a :Ag 
+"nnoremap <leader>a :Ag
 "nnoremap <leader>c :SyntasticCheck<CR>:Errors<CR>
 "nnoremap <leader>1 :set number!<CR>
-"nnoremap <leader>d :Make! 
+"nnoremap <leader>d :Make!
 "nnoremap <leader>r :call RunTestFile()<CR>
 "nnoremap <leader>g :call RunGoFile()<CR>
 "vnoremap <leader>y "+y
@@ -119,6 +120,15 @@ set pastetoggle=<F2>
 "let g:airline_right_alt_sep = ''
 "set laststatus=2
 " }}}
+" Mini Buffer Expolorer {{{
+"map <Leader>e :MBEOpen<cr>
+"map <Leader>c :MBEClose<cr>
+map <Leader>t :MBEToggle<cr>
+map <Leader>m :MBEFocus<cr>
+map <Leader>f :MBEbn<cr>
+map <Leader>b :MBEbp<cr>
+map <Leader>c :MBEbd<cr>
+"" }}}
 " CtrlP {{{
 "let g:ctrlp_match_window = 'bottom,order:ttb'
 "let g:ctrlp_switch_buffer = 0
@@ -126,7 +136,7 @@ set pastetoggle=<F2>
 "let g:ctrlp_custom_ignore = '\vbuild/|dist/|venv/|target/|\.(o|swp|pyc|egg)$'
 " }}}
 " Ultisnips {{{
-" Track the engine. 
+" Track the engine.
 " (for Vundle only)
 "Plugin 'SirVer/ultisnips'
 
@@ -135,18 +145,17 @@ set pastetoggle=<F2>
 "Plugin 'honza/vim-snippets'
 
 " Trigge configuration. Do not use <tab> if you use https://github.com/Valloric/mouCompleteMe.
-"let g:UltiSnipsExpandTrigger="<c-tab>"
 let g:UltiSnipsExpandTrigger = "<nop>"
 let g:UltiSnipsJumpForwardTrigger="<c-e>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:ulti_expand_or_jump_res = 0
 function ExpandSnippetOrCarriageReturn()
-    let snippet = UltiSnips#ExpandSnippetOrJump()
-    if g:ulti_expand_or_jump_res > 0
-        return snippet
-    else
-        return "\<CR>"
-    endif
+  let snippet = UltiSnips#ExpandSnippetOrJump()
+  if g:ulti_expand_or_jump_res > 0
+      return snippet
+  else
+      return "\<CR>"
+  endif
 endfunction
 inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
 
@@ -158,10 +167,20 @@ let g:UltiSnipsEditSplit="vertical"
 "let g:ycm_key_list_previous_completion = ["<C-S-TAB>", '<Up>']
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 let g:ycm_confirm_extra_conf = 0
+nnoremap <F3> :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " }}}
 " NERDTree {{{
 "let NERDTreeIgnore = ['\.pyc$', 'build', 'venv', 'egg', 'egg-info/', 'dist', 'docs']
+" }}}
+" vim-easy-align {{{
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. g=ip)
+nmap g= <Plug>(EasyAlign)
+let g:easy_align_delimiters = {
+\  '\': { 'pattern': '\\',  'left_margin': 2 },
+\ }
 " }}}
 " Syntastic {{{
 "let g:syntastic_python_flake8_args='--ignore=E501'
@@ -177,7 +196,7 @@ let g:ycm_confirm_extra_conf = 0
 "endif
 "" }}}
 " MacVim {{{
-"set guioptions-=r 
+"set guioptions-=r
 "set guioptions-=L
 " }}}
 " AutoGroups {{{
@@ -194,10 +213,10 @@ let g:ycm_confirm_extra_conf = 0
 "augroup END
 " }}}
 " Backups {{{
-set backup 
-set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp 
-set backupskip=/tmp/*,/private/tmp/* 
-set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp 
+set backup
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set backupskip=/tmp/*,/private/tmp/*
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set writebackup
 " }}}
 " Custom Functions {{{
@@ -255,10 +274,10 @@ function! <SID>CleanFile()
     let @/=_s
     call cursor(l, c)
 endfunction
- 
+
 function! s:NextTextObject(motion, dir)
   let c = nr2char(getchar())
- 
+
   if c ==# "b"
       let c = "("
   elseif c ==# "B"
@@ -266,10 +285,9 @@ function! s:NextTextObject(motion, dir)
   elseif c ==# "r"
       let c = "["
   endif
- 
+
   exe "normal! ".a:dir.c."v".a:motion.c
 endfunction
 " }}}
-
 " vim:foldmethod=marker:foldlevel=0
 
