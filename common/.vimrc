@@ -7,10 +7,14 @@ if has("autocmd")
                 \| exe "normal! g'\"" | endif
 endif
 " }}}
-" Douglas Black
 " Colors {{{
 syntax enable           " enable syntax processing
+set background=dark
 "colorscheme badwolf
+" }}}
+" Format Check {{{
+highlight OverLength ctermfg=black ctermbg=yellow guibg=yellow guifg=black
+autocmd FileType c,cpp,cc,h match OverLength /\%81v.\+/
 " }}}
 " Misc {{{
 set ttyfast                     " faster redraw
@@ -62,9 +66,10 @@ nnoremap E $
 nnoremap $ <nop>
 nnoremap ^ <nop>
 nnoremap gV `[v`]
-nnoremap <leader>[ :tabprevious<cr>
-nnoremap <leader>] :tabnext<cr>
-nnoremap <leader>n :tabnew<space>
+nnoremap to :tabprevious<cr>
+nnoremap tn :tabnext<cr>
+nnoremap tN :tabnew<space>
+nnoremap tV :vsplit<space>
 "onoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
 "xnoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
 "onoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>

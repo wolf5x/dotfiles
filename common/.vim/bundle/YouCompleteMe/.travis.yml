@@ -5,5 +5,5 @@ python:
 before_install:
   - git submodule update --init --recursive
 install:
-  - pip install -r python/test_requirements.txt --use-mirrors
-script: ./run_tests.sh
+  - pip install -r python/test_requirements.txt
+script: ./run_tests.py
