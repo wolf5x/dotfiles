@@ -1,0 +1,27 @@
+[submodule "common/.vim/bundle/YouCompleteMe"]
+	path = common/.vim/bundle/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe.git
+[submodule "common/.vim/bundle/minibufexpl.vim"]
+	path = common/.vim/bundle/minibufexpl.vim
+	url = https://github.com/fholgado/minibufexpl.vim.git
+[submodule "common/.vim/bundle/vim-easy-align"]
+	path = common/.vim/bundle/vim-easy-align
+	url = https://github.com/junegunn/vim-easy-align.git
+[submodule "common/.vim/bundle/ultisnips"]
+	path = common/.vim/bundle/ultisnips
+	url = https://github.com/SirVer/ultisnips.git
+[submodule "g/.vim/bundle/ultisnips"]
+	path = g/.vim/bundle/ultisnips
+	url = https://github.com/SirVer/ultisnips.git
+[submodule "g/.vim/bundle/vim-easy-align"]
+	path = g/.vim/bundle/vim-easy-align
+	url = https://github.com/junegunn/vim-easy-align.git
+[submodule "g/.vim/bundle/minibufexpl.vim"]
+	path = g/.vim/bundle/minibufexpl.vim
+	url = https://github.com/fholgado/minibufexpl.vim.git
+[submodule "g/.vim/bundle/nerdtree"]
+	path = g/.vim/bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "g/.vim/bundle/YouCompleteMe"]
+	path = g/.vim/bundle/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe.git

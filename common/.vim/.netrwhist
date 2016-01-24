@@ -1,5 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_cnt =8
 let g:netrw_dirhist_1='/usr/share/vim/google/ft-cpp/syntax'
 let g:netrw_dirhist_2='/Users/qqz/Projects/dotfiles/common/.vim/ultisnips'
 let g:netrw_dirhist_3='/home/wolf5x/projects/blog/htdoc/wp-content/themes/dw-timeline/assets'
@@ -7,3 +7,4 @@ let g:netrw_dirhist_4='/home/wolf5x/projects/blog/htdoc/wp-content/themes/heart/
 let g:netrw_dirhist_5='/home/wolf5x/projects/blog/htdoc/wp-content/themes/heart/tpl-heart'
 let g:netrw_dirhist_6='/home/wolf5x/projects/blog/htdoc/wp-content/themes/heart/lib'
 let g:netrw_dirhist_7='/home/wolf5x/projects/blog/htdoc/wp-content/themes/heart/tpl-cover'
+let g:netrw_dirhist_8='/home/wolf5x/projects/dotfiles/common/.vim/bundle/minibufexpl.vim'
