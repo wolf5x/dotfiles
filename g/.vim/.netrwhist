@@ -1,6 +1,9 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_cnt =7
 let g:netrw_dirhist_1='/usr/local/google/home/qqz/Documents/Milkyway/IDOL2'
 let g:netrw_dirhist_2='/tmp/2015-04-27'
 let g:netrw_dirhist_3='/google/src/cloud/qqz/fds-sync-fas/google3/isp/fiber/fas/pipeline'
 let g:netrw_dirhist_4='/google/src/cloud/qqz/milky-borg/google3/production/borgcron/prod/gfiber-dsi-prod/templates'
+let g:netrw_dirhist_5='/google/src/cloud/qqz/milky-join/google3/isp/fiber/fas/pipeline'
+let g:netrw_dirhist_6='/google/src/cloud/qqz/fds-sync-base/google3/java/com/google/fiber/fas/pipeline'
+let g:netrw_dirhist_7='/google/src/cloud/qqz/history/google3/isp/fiber/fas/proto'

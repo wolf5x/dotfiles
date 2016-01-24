@@ -57,32 +57,33 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 # ANSI color codes
-RS="\[\033[0m\]"    # reset
-HC="\[\033[1m\]"    # hicolor
-UL="\[\033[4m\]"    # underline
-INV="\[\033[7m\]"   # inverse background and foreground
-FBLK="\[\033[30m\]" # foreground black
-FRED="\[\033[31m\]" # foreground red
-FGRN="\[\033[32m\]" # foreground green
-FYEL="\[\033[33m\]" # foreground yellow
-FBLE="\[\033[34m\]" # foreground blue
-FMAG="\[\033[35m\]" # foreground magenta
-FCYN="\[\033[36m\]" # foreground cyan
-FWHT="\[\033[37m\]" # foreground white
-BBLK="\[\033[40m\]" # background black
-BRED="\[\033[41m\]" # background red
-BGRN="\[\033[42m\]" # background green
-BYEL="\[\033[43m\]" # background yellow
-BBLE="\[\033[44m\]" # background blue
-BMAG="\[\033[45m\]" # background magenta
-BCYN="\[\033[46m\]" # background cyan
-BWHT="\[\033[47m\]" # background white
+RS="\[\033[1;0m\]"    # reset
+HC="\[\033[1;1m\]"    # hicolor
+UL="\[\033[1;4m\]"    # underline
+INV="\[\033[1;7m\]"   # inverse background and foreground
+FBLK="\[\033[1;30m\]" # foreground black
+FRED="\[\033[1;31m\]" # foreground red
+FGRN="\[\033[1;32m\]" # foreground green
+FYEL="\[\033[1;33m\]" # foreground yellow
+FBLE="\[\033[1;34m\]" # foreground blue
+FMAG="\[\033[1;35m\]" # foreground magenta
+FCYN="\[\033[1;36m\]" # foreground cyan
+FWHT="\[\033[1;37m\]" # foreground white
+BBLK="\[\033[1;40m\]" # background black
+BRED="\[\033[1;41m\]" # background red
+BGRN="\[\033[1;42m\]" # background green
+BYEL="\[\033[1;43m\]" # background yellow
+BBLE="\[\033[1;44m\]" # background blue
+BMAG="\[\033[1;45m\]" # background magenta
+BCYN="\[\033[1;46m\]" # background cyan
+BWHT="\[\033[1;47m\]" # background white
 
 if [ "$color_prompt" = yes ]; then
     #PS1='${debian_chroot:+($debian_chroot)}${HC}${FYEL}\u@\h${RS}:\w${FGRN}\$${RS} '
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[1;36m\]\u\[\033[1;36m\]@\[\033[1;36m\]\h\[\033[1;33m\]:\[\033[1;32m\]\w\[\033[1;33m\]\$\[\033[0m\] '
+    #PS1='${debian_chroot:+($debian_chroot)}'$FYEL'[\D{%F %T}]'$FCYN'\u@\h'$FYEL':'$FGRN'\w'$FYEL'\$'$RS' '
+    PS1='${debian_chroot:+($debian_chroot)}'$FYEL'[\D{%F %T}]'$FCYN'\u'$FYEL':'$FGRN'\w'$FYEL'\$'$RS' '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='${debian_chroot:+($debian_chroot)}[\D{%F %T}]\u:\w\$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -159,14 +160,17 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # alias
-alias spansql='span sql --max_value_lines=100'
+alias gocpp='cd ~/Projects/cpplearn'
+alias spansql='span sql --max_value_lines=1000 --op_deadline=3600'
+alias spanfas='spansql /span/global/gfiber-busdata:fas'
+alias spanweaver='spansql /span/global/gfiber-busdata:fms-repository'
 alias gofms='g4d && cd isp/fiber/fms'
 alias gofas='g4d && cd isp/fiber/fas'
 alias gojfas='g4d && cd java/com/google/fiber/fas'
 alias gojtfas='g4d && cd javatests/com/google/fiber/fas'
 alias gomilky='g4d && cd isp/fiber/fas/milkyway'
 alias goborg='g4d && cd production/borg/gfiber-busdata/templates'
-alias gobcron='g4d && cd production/borgcron/prod/gfiber-dsi-prod'
+alias gobcron='g4d && cd production/borgcron/prod/gfiber-dsi-prod/fas'
 alias gobiz='g4d && cd java/com/google/fiber/bizsys/flume/address'
 alias goexp='g4d && cd experimental/users/qqz'
 alias gojexp='g4d && cd experimental/java/users/qqz'

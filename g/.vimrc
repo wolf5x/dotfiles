@@ -7,6 +7,16 @@ if has("autocmd")
                 \| exe "normal! g'\"" | endif
 endif
 " }}}
+" Google Plugins {{{
+source /usr/share/vim/google/google.vim
+" YCM
+Glug youcompleteme-google
+Glug ultisnips-google
+" codefmt
+Glug codefmt
+Glug codefmt-google
+autocmd FileType bzl AutoFormatBuffer buildifier
+" }}}
 " Colors {{{
 syntax enable           " enable syntax processing
 set background=dark
@@ -60,15 +70,15 @@ set foldlevelstart=10    " start with fold level of 1
 " View Shortcuts {{{
 "nnoremap j gj
 "nnoremap k gk
-nnoremap B ^
-nnoremap E $
-nnoremap $ <nop>
-nnoremap ^ <nop>
+"nnoremap B ^
+"nnoremap E $
+"nnoremap $ <nop>
+"nnoremap ^ <nop>
 nnoremap gV `[v`]
-nnoremap to :tabprevious<cr>
-nnoremap tn :tabnext<cr>
-nnoremap tN :tabnew<space>
-nnoremap tV :vsplit<space>
+"nnoremap to :tabprevious<cr>
+"nnoremap tn :tabnext<cr>
+"nnoremap tN :tabnew<space>
+"nnoremap tV :vsplit<space>
 "onoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
 "xnoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
 "onoremap in :<c-u>call <SID>NextTextObject('i', 'f')<cr>
@@ -82,7 +92,7 @@ nnoremap tV :vsplit<space>
 " Leader Shortcuts {{{
 let mapleader=","
 "nnoremap <leader>m :silent make\|redraw!\|cw<CR>
-"nnoremap <leader>w :NERDTree<CR>
+nnoremap <leader>w :NERDTree<CR>
 "nnoremap <leader>u :GundoToggle<CR>
 "nnoremap <leader>h :A<CR>
 "nnoremap <leader>ev :vsp $MYVIMRC<CR>
@@ -118,6 +128,15 @@ set pastetoggle=<F2>
 "let g:airline_right_alt_sep = ''
 "set laststatus=2
 " }}}
+" Mini Buffer Expolorer {{{
+"map <Leader>e :MBEOpen<cr>
+"map <Leader>c :MBEClose<cr>
+map <Leader>t :MBEToggle<cr>
+map <Leader>m :MBEFocus<cr>
+map <Leader>f :MBEbn<cr>
+map <Leader>b :MBEbp<cr>
+map <Leader>c :MBEbd<cr>
+"" }}}
 " CtrlP {{{
 "let g:ctrlp_match_window = 'bottom,order:ttb'
 "let g:ctrlp_switch_buffer = 0
@@ -139,12 +158,12 @@ let g:UltiSnipsJumpForwardTrigger="<c-e>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:ulti_expand_or_jump_res = 0
 function ExpandSnippetOrCarriageReturn()
-    let snippet = UltiSnips#ExpandSnippetOrJump()
-    if g:ulti_expand_or_jump_res > 0
-        return snippet
-    else
-        return "\<CR>"
-    endif
+  let snippet = UltiSnips#ExpandSnippetOrJump()
+  if g:ulti_expand_or_jump_res > 0
+      return snippet
+  else
+      return "\<CR>"
+  endif
 endfunction
 inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
 
@@ -156,10 +175,22 @@ let g:UltiSnipsEditSplit="vertical"
 "let g:ycm_key_list_previous_completion = ["<C-S-TAB>", '<Up>']
 "let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 "let g:ycm_confirm_extra_conf = 0
+"let g:ycm_server_use_vim_stdout = 1
+"let g:ycm_server_log_level = 'debug'
+nnoremap <F3> :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " }}}
 " NERDTree {{{
-"let NERDTreeIgnore = ['\.pyc$', 'build', 'venv', 'egg', 'egg-info/', 'dist', 'docs']
+let NERDTreeIgnore = ['\.pyc$', 'build', 'venv', 'egg', 'egg-info/', 'dist', 'docs']
+" }}}
+" vim-easy-align {{{
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. g=ip)
+nmap g= <Plug>(EasyAlign)
+let g:easy_align_delimiters = {
+\  '\': { 'pattern': '\\',  'left_margin': 2 },
+\ }
 " }}}
 " Syntastic {{{
 "let g:syntastic_python_flake8_args='--ignore=E501'
@@ -267,11 +298,5 @@ function! s:NextTextObject(motion, dir)
 
   exe "normal! ".a:dir.c."v".a:motion.c
 endfunction
-" }}}
-" Google Plugins {{{
-source /usr/share/vim/google/google.vim
-Glug youcompleteme-google
-Glug ultisnips-google
-Glug codefmt-google auto_filetypes+=blazebuild
 " }}}
 " vim:foldmethod=marker:foldlevel=0
