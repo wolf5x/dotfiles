@@ -150,6 +150,7 @@ export MILKYPLACER=/placer/prod/home/gfiber-busdata-dremel/milkyway
 export CNS=/cns/pe-d/home/gfiber-busdata
 export ICON=/namespace/gfiber-partner/dropbox/gfiber-partner-icon/upload
 alias fu='fileutil'
+alias fufas='fu -gfs_user=gfiber-address-service'
 alias fl='fu ls'
 alias fll='fl -l'
 alias fcp='fu cp'
@@ -160,10 +161,12 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # alias
-alias gocpp='cd ~/Projects/cpplearn'
 alias spansql='span sql --max_value_lines=1000 --op_deadline=3600'
 alias spanfas='spansql /span/global/gfiber-busdata:fas'
+alias spanfasdev='spansql /span/nonprod/gfiber-address-service:fas-dev'
+alias spanfasstg='spansql /span/nonprod/gfiber-address-service:fas-stg'
 alias spanweaver='spansql /span/global/gfiber-busdata:fms-repository'
+alias spanonborg='span --span_borguser=fas-eng --span_on_borg'
 alias gofms='g4d && cd isp/fiber/fms'
 alias gofas='g4d && cd isp/fiber/fas'
 alias gojfas='g4d && cd java/com/google/fiber/fas'
@@ -171,13 +174,18 @@ alias gojtfas='g4d && cd javatests/com/google/fiber/fas'
 alias gomilky='g4d && cd isp/fiber/fas/milkyway'
 alias goborg='g4d && cd production/borg/gfiber-busdata/templates'
 alias gobcron='g4d && cd production/borgcron/prod/gfiber-dsi-prod/fas'
-alias gobiz='g4d && cd java/com/google/fiber/bizsys/flume/address'
+alias gobcrondev='g4d && cd productino/borgcron/prod/gfiber-address-service-dev'
 alias goexp='g4d && cd experimental/users/qqz'
 alias gojexp='g4d && cd experimental/java/users/qqz'
-alias updfas='span updatedatabase /span/global/gfiber-busdata:fas'
-alias getdat='/google/data/ro/projects/tonic/admin_session \
-  --tonic_policy=gfiber-fds-eng-prod-access \
-  --user=all_principals \
-  --delegates=mdbgroup/megastore,mdbuser/gfiber-fds-prod,mdbuser/qqz \
-  --reason="Sync FDS address to FAS"'
+alias placer_mv='/google/data/ro/users/qq/qqz/placer_mv'
+alias flex_tool='/google/data/ro/projects/ads/production/flex/flex_tool.par'
+alias symutil='/google/data/ro/teams/cloud-symbol-server/symutil'
+alias gocpp='g4d -f cpp && goexp'
 
+# Use meld as g4 mergetool
+if [ -n "$DISPLAY" ] ; then export G4MULTIDIFF=1 ; fi
+export P4DIFF='bash -c "meld \${@/#:/--diff}" padding-to-occupy-argv0'
+export P4MERGE='bash -c "chmod u+w \$1 ; meld \$2 \$1 \$3 ; cp \$1 \$4" padding-to-occupy-argv0'
+
+# Use kdiff3 as g4 mergetool
+#export P4MERGE="$HOME/bin/kdiff3_p4merge"

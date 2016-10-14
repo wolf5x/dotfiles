@@ -12,10 +12,23 @@ source /usr/share/vim/google/google.vim
 " YCM
 Glug youcompleteme-google
 Glug ultisnips-google
+let g:UltiSnipsExpandTrigger = "<c-j>"
+let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 " codefmt
 Glug codefmt
 Glug codefmt-google
-autocmd FileType bzl AutoFormatBuffer buildifier
+"Glug codefmt-google auto_filetypes+=python,
+function s:AddCodefmtEqualMapping() abort
+  " Replace all the various ={motion} keys to codefmt
+  nnoremap <buffer> = :set opfunc=codefmt#FormatMap<CR>g@
+  nnoremap <buffer> == :FormatLines<CR>
+  vnoremap <buffer> = :FormatLines<CR>
+endfunction
+augroup mycodefmt
+  autocmd FileType c,cpp,proto call s:AddCodefmtEqualMapping()
+  autocmd FileType bzl AutoFormatBuffer buildifier
+augroup END
 " }}}
 " Colors {{{
 syntax enable           " enable syntax processing
@@ -48,7 +61,7 @@ autocmd FileType c,cpp,cc,h setlocal ts=2 sts=2 sw=2 et wrap tw=80
 " UI Layout {{{
 set number              " show line numbers
 set showcmd             " show command in bottom bar
-set nocursorline          " highlight current line
+set cursorline          " highlight current line
 set wildmenu
 "set lazyredraw
 set showmatch           " higlight matching parenthesis
