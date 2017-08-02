@@ -25,6 +25,3 @@
 [submodule "g/.vim/bundle/YouCompleteMe"]
 	path = g/.vim/bundle/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe.git
-[submodule "g/.vim/bundle/minibufexpl"]
-	path = g/.vim/bundle/minibufexpl
-	url = https://github.com/fholgado/minibufexpl.vim.git
