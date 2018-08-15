@@ -151,8 +151,6 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Shortcut
-export DEDUP_CNS=/cns/io-d/home/gfiber-address-service/fas/dedup
-export DEDUP_LOCAL=/usr/local/google/home/qqz/Documents/Addr/dedup
 
 # Alias Common
 alias fu='fileutil'
@@ -162,8 +160,9 @@ alias fcp='fu cp'
 alias spansql='span sql --max_value_lines=1000 --op_deadline=3600'
 alias spanonborg='span --span_on_borg'
 alias g4cd='g4d && cd'
-alias goexp='g4cd experimental/users/qqz'
-alias gojexp='g4cd experimental/java/users/qqz'
+alias g4r='g4 citc -d'
+alias gomyexp='g4cd experimental/users/qqz'
+alias gomyjexp='g4cd experimental/java/users/qqz'
 alias placer_mv='/google/data/ro/users/qq/qqz/placer_mv'
 alias flex_tool='/google/data/ro/projects/ads/production/flex/flex_tool.par'
 alias symutil='/google/data/ro/teams/cloud-symbol-server/symutil'
@@ -177,8 +176,15 @@ alias golgt='g4cd configs/production/throttler/'
 alias golgborg='g4cd production/borg/livegraph'
 alias golgcron='g4cd production/borgcron/prod/livegraph-prod'
 #Alias of Polymath
-alias gopo='g4cd knowledge/graph/polymath/orchestrator/batch'
+alias gopo='g4cd knowledge/graph/polymath'
+alias gons='g4cd knowledge/graph/polymath/notify'
+alias gobo='g4cd knowledge/graph/polymath/orchestrator/batch'
+alias goexp='g4cd knowledge/graph/polymath/exp'
+alias gopborg='g4cd production/borg/polymath'
 alias gst='/google/data/ro/teams/scaffolding/gen_scaffolding_templates.par'
+alias mpm-bo-prod='blaze mpm -c opt //knowledge/graph/polymath/orchestrator/batch/worker:batch-orchestrator_mpm && mpm setlabel knowledge/graph/polymath/batch/orchestrator live latest'
+export POLYMATH_DB_PROD=/span/nonprod/livegraph-polymath-test:polymath-prod
+
 # Alias of Weaver
 alias fufas='fu -gfs_user=gfiber-address-service'
 alias flfas='fufas ls'
@@ -199,6 +205,9 @@ alias gomilky='g4cd isp/fiber/fas/milkyway'
 #alias gobcron='g4cd production/borgcron/prod/gfiber-address-service'
 #alias gobcrondev='g4cd productino/borgcron/prod/gfiber-address-service-dev'
 
+# Patchpanel
+alias patchpanel='/google/data/ro/projects/patchpanel/live/patchpanel'
+
 # Use meld as g4 mergetool
 if [ -n "$DISPLAY" ] ; then export G4MULTIDIFF=1 ; fi
 export P4DIFF='bash -c "meld \${@/#:/--diff}" padding-to-occupy-argv0'
@@ -209,3 +218,9 @@ export P4MERGE='bash -c "chmod u+w \$1 ; meld \$2 \$1 \$3 ; cp \$1 \$4" padding-
 
 # Tab completion for git5
 source /etc/bash_completion
+
+# Use `g4d` in bash
+# enable programmable completion features
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+  . /etc/bash_completion
+fi
